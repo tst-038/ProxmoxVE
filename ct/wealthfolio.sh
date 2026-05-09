@@ -28,9 +28,8 @@ function update_script() {
     msg_error "No ${APP} Installation Found!"
     exit
   fi
-
+  export PNPM_VERSION=9.15.0
   NODE_VERSION="24" NODE_MODULE="pnpm" setup_nodejs
-  pnpm config set only-built-dependencies esbuild msw
 
   if grep -q '^WF_CORS_ALLOW_ORIGINS=\*$' /opt/wealthfolio/.env; then
     sed -i "s|^WF_CORS_ALLOW_ORIGINS=\*$|WF_CORS_ALLOW_ORIGINS=http://${LOCAL_IP}:8080|" /opt/wealthfolio/.env
