@@ -18,7 +18,7 @@ header_info "$APP"
 variables
 color
 catch_errors
-
+pnpm config set only-built-dependencies esbuild msw
 function update_script() {
   header_info
   check_container_storage
