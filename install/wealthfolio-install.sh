@@ -29,15 +29,13 @@ fetch_and_deploy_gh_release "wealthfolio" "afadil/wealthfolio" "tarball"
 msg_info "Building Frontend (patience)"
 cd /opt/wealthfolio
 corepack enable
-
-pnpm config set ignore-scripts false
-
+cat <<EOF > .npmrc
+ignore-scripts=false
+only-built-dependencies[]=esbuild
+only-built-dependencies[]=msw
+EOF
 export PNPM_IGNORE_SCRIPTS=false
-
 export npm_config_yes=true
-
-$STD pnpm install --frozen-lockfile --ignore-scripts=false
-
 export BUILD_TARGET=web
 $STD pnpm install --frozen-lockfile
 $STD pnpm --filter frontend... build

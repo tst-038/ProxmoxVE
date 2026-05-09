@@ -50,11 +50,15 @@ function update_script() {
     msg_info "Building Frontend (patience)"
     cd /opt/wealthfolio
     export BUILD_TARGET=web
-    $STD pnpm config set only-built-dependencies esbuild msw
-
-    $STD pnpm install --frozen-lockfile --ignore-scripts=false
-
-    $STD pnpm --filter frontend... build
+    cat <<EOF > .npmrc
+ignore-scripts=false
+only-built-dependencies[]=esbuild
+only-built-dependencies[]=msw
+EOF
+    export PNPM_IGNORE_SCRIPTS=false
+    export npm_config_yes=true
+    $STD pnpm install --frozen-lockfile
+    $STD pnpm --filter frontend... build 
     msg_ok "Built Frontend"
 
     msg_info "Building Backend (patience)"
