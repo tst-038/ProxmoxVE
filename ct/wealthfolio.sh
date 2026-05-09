@@ -18,7 +18,7 @@ header_info "$APP"
 variables
 color
 catch_errors
-pnpm config set only-built-dependencies esbuild msw
+
 function update_script() {
   header_info
   check_container_storage
@@ -30,6 +30,7 @@ function update_script() {
   fi
 
   NODE_VERSION="24" NODE_MODULE="pnpm" setup_nodejs
+  pnpm config set only-built-dependencies esbuild msw
 
   if grep -q '^WF_CORS_ALLOW_ORIGINS=\*$' /opt/wealthfolio/.env; then
     sed -i "s|^WF_CORS_ALLOW_ORIGINS=\*$|WF_CORS_ALLOW_ORIGINS=http://${LOCAL_IP}:8080|" /opt/wealthfolio/.env
